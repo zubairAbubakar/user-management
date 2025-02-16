@@ -1,16 +1,11 @@
 import React from 'react';
-import { CardWrapper } from '@/components/auth/card-wrapper';
+
+import { LoginForm } from '@/components/auth/login-form';
 
 const LoginPage = () => {
   return (
     <>
-      <CardWrapper
-        headerLabel="Welcome back"
-        backButtonLabel="Don't have an account? Sign up"
-        backButtonHref="/auth/signup"
-      >
-        Login Form
-      </CardWrapper>
+      <LoginForm />
     </>
   );
 };
