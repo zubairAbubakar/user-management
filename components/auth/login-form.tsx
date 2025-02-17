@@ -52,7 +52,7 @@ export const LoginForm = () => {
     <CardWrapper
       headerLabel="Welcome back"
       backButtonLabel="Don't have an account? Sign up"
-      backButtonHref="/auth/signup"
+      backButtonHref="/auth/register"
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
