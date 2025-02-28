@@ -10,7 +10,5 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { error: 'Invalid credentials' };
   }
 
-  const { email, password } = validatedFields.data;
-
   return { success: 'Login successful' };
 };
