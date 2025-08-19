@@ -16,6 +16,9 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
   const router = useRouter();
 
   const onClick = () => {
+    // TODO: Implement modal mode when mode === 'modal'
+    // TODO: Use asChild prop for conditional rendering
+    console.log('Mode:', mode, 'AsChild:', asChild);
     router.push('/auth/login');
   };
 
