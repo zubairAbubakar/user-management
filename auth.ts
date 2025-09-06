@@ -7,7 +7,26 @@ import { getUserById } from './commons/user';
 import { UserRole } from '@prisma/client';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  pages: {
+    signIn: '/auth/login',
+    error: '/auth/error',
+  },
+  events: {
+    async linkAccount({ user }) {
+      await prismaDb.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
+    async signIn({ account }) {
+      // Allow OAuth signin - let NextAuth handle account linking errors gracefully
+      if (account?.provider !== 'credentials') {
+        return true;
+      }
+      return true;
+    },
     async session({ session, token }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;

@@ -10,7 +10,7 @@ export const publicRoutes = ['/'];
  * Theese routes are protected by the authentication middleware.
  * @type {string[]}
  */
-export const authRoutes = ['/auth/login', '/auth/register'];
+export const authRoutes = ['/auth/login', '/auth/register', '/auth/error'];
 
 /**
  * An prefix for the API routes that are protected by the authentication middleware.
