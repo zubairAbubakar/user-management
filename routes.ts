@@ -3,7 +3,7 @@
  * Theese routes are not protected by the authentication middleware.
  * @type {string[]}
  */
-export const publicRoutes = ['/'];
+export const publicRoutes = ['/', '/auth/email-verification'];
 
 /**
  * An array of routes that are protected by the authentication middleware.

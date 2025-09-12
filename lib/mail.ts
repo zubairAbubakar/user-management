@@ -19,7 +19,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       return;
     }
 
-    const confirmationLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+    const confirmationLink = `http://localhost:3000/auth/email-verification?token=${token}`;
 
     // Use Resend's default domain first for testing
     const fromEmail = 'onboarding@resend.dev'; // Resend's default verified domain
