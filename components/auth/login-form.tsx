@@ -47,7 +47,6 @@ export const LoginForm = () => {
 
     startTransition(() => {
       login(values).then((data) => {
-        console.log('data', data);
         if (data) {
           setError(data.error || '');
           setSuccess(data.success || '');
@@ -61,6 +60,7 @@ export const LoginForm = () => {
       headerLabel="Welcome back"
       backButtonLabel="Don't have an account? Sign up"
       backButtonHref="/auth/register"
+      showSocial={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
