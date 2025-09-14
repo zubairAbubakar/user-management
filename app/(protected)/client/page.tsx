@@ -1,10 +1,12 @@
-import { currentUser } from '@/lib/auth';
+'use client';
+
 import { UserInfo } from '@/components/user-info';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
-const ServerPage = async () => {
-  const user = await currentUser();
+const ClientPage = () => {
+  const user = useCurrentUser();
 
-  return <UserInfo user={user} label="💻 Server Component" />;
+  return <UserInfo user={user} label="🖥️ Client Component" />;
 };
 
-export default ServerPage;
+export default ClientPage;
