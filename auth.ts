@@ -6,6 +6,7 @@ import authConfig from '@/auth.config';
 import { getUserById } from './commons/user';
 import { UserRole } from '@prisma/client';
 import { getTwoFactorConfirmationByUserId } from './commons/two-factor-confirmation';
+import { getAccountByUserId } from './commons/account';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
@@ -25,7 +26,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Allow OAuth signin - let NextAuth handle account linking errors gracefully
       if (account?.provider !== 'credentials') return true;
 
-      const existingUser = await getUserById(user.id!);
+      // Ensure user.id exists before proceeding
+      if (!user.id) return false;
+
+      const existingUser = await getUserById(user.id);
 
       // Prevent signin if email is not verified
       if (existingUser && !existingUser.emailVerified) return false;
@@ -52,6 +56,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       if (session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
+      if (session.user && token.name) {
+        session.user.name = token.name;
+      }
+      if (session.user && token.email) {
+        session.user.email = token.email;
       }
 
       return session;
@@ -62,6 +73,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
+
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
 
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
