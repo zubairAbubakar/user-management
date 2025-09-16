@@ -2,6 +2,8 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
+const DOMAIN = process.env.NEXT_PUBLIC_APP_URL;
+
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   try {
     await resend.emails.send({
@@ -17,7 +19,7 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
   try {
-    const resetLink = `http://localhost:3000/auth/new-password?token=${token}`;
+    const resetLink = `${DOMAIN}/auth/new-password?token=${token}`;
 
     await resend.emails.send({
       from: 'onboarding@resend.dev',
@@ -47,7 +49,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
       return;
     }
 
-    const confirmationLink = `http://localhost:3000/auth/email-verification?token=${token}`;
+    const confirmationLink = `${DOMAIN}/auth/email-verification?token=${token}`;
 
     // Use Resend's default domain first for testing
     const fromEmail = 'onboarding@resend.dev'; // Resend's default verified domain
